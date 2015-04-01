@@ -1,5 +1,7 @@
 var _ = require('underscore');
 
+var min_length = 3, stop_char = 'x';
+
 /**
  * from an array of array of rows of a codewords board
  * generate an array of word objects
@@ -11,7 +13,7 @@ var _ = require('underscore');
  */
 
 function BoardParser(data){
-    //this.data = data;
+
     this.words = [];
     this.index = 0;
 
@@ -22,7 +24,7 @@ function BoardParser(data){
 
         _.each(row, function(cell, index, list){
             //console.log(cell);
-            if ('x' == cell){
+            if (stop_char== cell){
                 //end of word
                 this.addWord(word, x, y, orientation);
                 word = [];
@@ -37,10 +39,41 @@ function BoardParser(data){
         if (word.length){
             this.addWord(word, x, y, orientation);
         }
+
     }, this);
+
+    var cell = 0;
+    orientation = 'v';
+
+    // now extract vertical words
+    for (var i = 0; i < data[0].length; i++){
+
+        word = [], x = i, y = 0;
+
+        for (var j = 0; j < data.length; j++){
+
+            cell = data[j][i];
+            //console.log(cell);
+            if (stop_char == cell){
+                //end of word
+                this.addWord(word, x, y, orientation);
+                word = [];
+                y += 1;
+            } else {
+                word.push(cell);
+            }
+        }
+        if (word.length){
+            this.addWord(word, x, y, orientation);
+        }
+    }
 }
 
 BoardParser.prototype.addWord = function(cells, x, y, orientation){
+    if (cells.length < min_length){
+        return;
+    }
+
     this.words.push(
         {
             cells: cells,
