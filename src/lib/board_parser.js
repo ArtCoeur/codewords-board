@@ -1,6 +1,7 @@
 var _ = require('underscore');
 
-var min_length = 3, stop_char = 'x';
+var min_length = 3,
+    stop_char = 'x';
 
 /**
  * from an array of array of rows of a codewords board
@@ -18,12 +19,10 @@ function BoardParser(data){
     this.index = 0;
 
     _.each(data, function(row, index, list) {
-        //console.log(row);
         // iterate over each cell in the row
         var word = [], y = index, orientation = 'h', x = 0;
 
         _.each(row, function(cell, index, list){
-            //console.log(cell);
             if (stop_char== cell){
                 //end of word
                 this.addWord(word, x, y, orientation);
@@ -36,9 +35,7 @@ function BoardParser(data){
         }, this);
 
         // end of row, add the last word
-        if (word.length){
-            this.addWord(word, x, y, orientation);
-        }
+        this.addWord(word, x, y, orientation);
 
     }, this);
 
@@ -53,23 +50,20 @@ function BoardParser(data){
         for (var j = 0; j < data.length; j++){
 
             cell = data[j][i];
-            //console.log(cell);
             if (stop_char == cell){
-                //end of word
                 this.addWord(word, x, y, orientation);
                 word = [];
-                y += 1;
+                y = j + 1;
             } else {
                 word.push(cell);
             }
         }
-        if (word.length){
-            this.addWord(word, x, y, orientation);
-        }
+        this.addWord(word, x, y, orientation);
     }
 }
 
 BoardParser.prototype.addWord = function(cells, x, y, orientation){
+    
     if (cells.length < min_length){
         return;
     }
