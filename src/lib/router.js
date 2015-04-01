@@ -1,3 +1,4 @@
+var BoardParser = require('./board_parser');
 
 // deal with facts as they arrive
 
@@ -18,5 +19,7 @@ exports.handleFact= function(pub, fact) {
 * @param fact fact object
 */
 function handleNewBoard(pub, fact) {
+
+    // parse fact.data.body using fact.data.type
 
 }

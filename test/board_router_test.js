@@ -9,13 +9,13 @@ describe('router', function() {
                 name: 'new-board',
                 board: 'abc',
                 data : {
-                    body: '1,16,6,4,22,x,5,13,4,6,14,14,17,6,2',
+                    body: ['1,16,6,4,22,x,5,13,4,6,14,14,17,6,2'],
                     type: 'text/csv'
                 }
             };
 
             // mock the pub socket
-            router.handleFact(pub, fact);
+           // router.handleFact(pub, fact);
         });
     });
 });
