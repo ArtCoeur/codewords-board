@@ -1,11 +1,10 @@
 var logger = require('./lib/logger'),
     rabbitmq = require('rabbit.js'),
-    handler = require('./lib/handler');
+    router = require('./lib/router');
 
-logger.info('board handler running');
+logger.info('board router running');
 
 // wait until rabbitmq can accept connections, somehow
-
 function doConnect(){
 
     try {
@@ -27,7 +26,7 @@ function doConnect(){
                 // deal with facts as they come in
                 sub.on('data', function (body) {
                     logger.info("new fact : " + body);
-                    handler.handleFact(pub, JSON.parse(body));
+                    router.handleFact(pub, JSON.parse(body));
                 });
             });
         });
