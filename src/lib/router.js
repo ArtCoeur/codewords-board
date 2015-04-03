@@ -1,4 +1,5 @@
-var BoardParser = require('./board_parser');
+var BoardParser = require('./board_parser'),
+    logger = require('./lib/logger');
 
 // deal with facts as they arrive
 
@@ -23,14 +24,16 @@ function handleNewBoard(pub, fact) {
     // parse fact.data.body using fact.data.type
     var parser = new BoardParser(fact.data.body.board);
 
-    while(word = parser.next()){
-        pub.write({
+    while(parser.hasMore()){
+        var word = parser.next();
+        logger.info(word);
+        pub.write(JSON.stringify({
             board: fact.board,
             name: 'new-word',
             data: {
                 body: word,
                 type: 'application/json'
             }
-        }, 'utf8');
+        }), 'utf8');
     }
 }

@@ -86,4 +86,8 @@ BoardParser.prototype.next = function() {
     }
 };
 
+BoardParser.prototype.hasMore = function() {
+    return this.index < this.words.length;
+}
+
 module.exports = BoardParser;
