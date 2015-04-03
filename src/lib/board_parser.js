@@ -63,7 +63,7 @@ function BoardParser(data){
 }
 
 BoardParser.prototype.addWord = function(cells, x, y, orientation){
-    
+
     if (cells.length < min_length){
         return;
     }

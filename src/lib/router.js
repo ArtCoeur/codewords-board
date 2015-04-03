@@ -21,5 +21,16 @@ exports.handleFact= function(pub, fact) {
 function handleNewBoard(pub, fact) {
 
     // parse fact.data.body using fact.data.type
+    var parser = new BoardParser(fact.data.body.board);
 
+    while(word = parser.next()){
+        pub.write({
+            board: fact.board,
+            name: 'new-word',
+            data: {
+                body: word,
+                type: 'application/json'
+            }
+        }, 'utf8');
+    }
 }
