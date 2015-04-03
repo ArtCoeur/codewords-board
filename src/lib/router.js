@@ -1,5 +1,5 @@
 var BoardParser = require('./board_parser'),
-    logger = require('./lib/logger');
+    logger = require('./logger');
 
 // deal with facts as they arrive
 
