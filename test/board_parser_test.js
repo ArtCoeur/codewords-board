@@ -55,7 +55,7 @@ describe('BoardParser', function() {
 
             // next word should be vertical, words must be longer than 2 chars
             var word = parser.next();
-            console.log(word);
+            // console.log(word);
 
             assert(word.cells.length == 4);
             assert(word.location.x == 0);
@@ -63,7 +63,7 @@ describe('BoardParser', function() {
             assert(word.orientation == 'v');
 
             word = parser.next();
-            console.log(word);
+            //console.log(word);
 
             assert(word.cells.length == 5);
             assert(word.location.x == 2);
@@ -71,12 +71,25 @@ describe('BoardParser', function() {
             assert(word.orientation == 'v');
 
             word = parser.next();
-            console.log(word);
+            //console.log(word);
 
             assert(word.cells.length == 3);
             assert(word.location.x == 5);
             assert(word.location.y == 2);
             assert(word.orientation == 'v');
+        });
+
+        it('should allow iteration', function(){
+            // get fixtures from a file or something
+            var data = [['1','16','6','4','22','x','5','13','4','6','14','14','17','6','2']];
+            var parser = new BoardParser(data);
+
+            var word = parser.next();
+            assert(word != null);
+            while(word != null){
+                word = parser.next();
+            }
+            assert(word == null);
         });
     });
 });
