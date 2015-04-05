@@ -2,7 +2,7 @@ var logger = require('./lib/logger'),
     rabbitmq = require('rabbit.js'),
     router = require('./lib/router');
 
-logger.info('board router running');
+logger.info('board: running');
 
 // wait until rabbitmq can accept connections, somehow
 function doConnect(){
@@ -14,19 +14,21 @@ function doConnect(){
 
         context.on('ready', function() {
 
-            logger.info('connected');
+            logger.info('board: connected');
 
             // subscribe to pub and sub queues
             var sub = context.socket('SUB'),
                 pub = context.socket('PUB');
 
-            sub.connect('events', function(){
-                logger.info('Connected to events');
+            pub.connect('events', function() {
 
-                // deal with facts as they come in
-                sub.on('data', function (body) {
-                    logger.info("new fact : " + body);
-                    router.handleFact(pub, JSON.parse(body));
+                sub.connect('events', function () {
+
+                    // deal with facts as they come in
+                    sub.on('data', function (body) {
+                        logger.info("new fact : " + body);
+                        router.handleFact(pub, JSON.parse(body));
+                    });
                 });
             });
         });

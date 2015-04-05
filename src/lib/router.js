@@ -8,7 +8,7 @@ var BoardParser = require('./board_parser'),
  * @param fact fact object
  */
 exports.handleFact= function(pub, fact) {
-    if (fact.name == 'new-board'){
+    if (fact.name == 'board.new'){
         // extract words from board data & cells
         handleNewBoard(pub, fact);
         // pub.write(json, 'utf8');
@@ -29,7 +29,7 @@ function handleNewBoard(pub, fact) {
         logger.info(word);
         pub.write(JSON.stringify({
             board: fact.board,
-            name: 'new-word',
+            name: 'word.new',
             data: {
                 body: word,
                 type: 'application/json'
