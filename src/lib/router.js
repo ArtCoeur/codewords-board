@@ -37,14 +37,14 @@ function handleNewJsonBoard(pub, fact) {
     // publish facts about the solved cells
     // solved is an object in this format : {"3": "e", "16:"j"}
     _.each(_.keys(fact.data.body.solved), function(element){
-        publishCellUpdated(pub, fact.board, element, solved[element]);
+        publishCellUpdated(pub, fact.board, element, fact.data.body.solved[element]);
     });
 }
 
 function handleNewXmlBoard(pub, fact) {
     var xml_parser = new XmlBoardParser(fact.data.body.board);
     var lines = [];
-    while(parser.hasMore()){
+    while(xml_parser.hasMore()){
         lines.push(parser.next());
     }
 
@@ -55,7 +55,7 @@ function handleNewXmlBoard(pub, fact) {
     }
 
     _.each(_.keys(xml_parser.solved), function(element){
-        publishCellUpdated(pub, fact.board, element, solved[element]);
+        publishCellUpdated(pub, fact.board, element, xml_parser.solved[element]);
     });
 }
 
