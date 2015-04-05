@@ -18,6 +18,10 @@ function JsonBoardParser(data){
     this.words = [];
     this.index = 0;
 
+    if (!data.length){
+        return;
+    }
+
     _.each(data, function(row, index, list) {
         // iterate over each cell in the row
         var word = [], y = index, orientation = 'h', x = 0;
@@ -81,7 +85,7 @@ JsonBoardParser.prototype.addWord = function(cells, x, y, orientation){
  * Return the next word object
  */
 JsonBoardParser.prototype.next = function() {
-    if (this.index < this.words.length){
+    if (this.hasMore()){
         return this.words[this.index++];
     }
 };

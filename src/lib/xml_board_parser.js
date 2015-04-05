@@ -75,7 +75,7 @@ XmlBoardParser.prototype.addCell = function(node) {
  * Return the next word object
  */
 XmlBoardParser.prototype.next = function() {
-    if (this.index < this.cells.length){
+    if (this.hasMore()){
         return this.cells[this.index++];
     }
 };

@@ -45,13 +45,13 @@ function handleNewXmlBoard(pub, fact) {
     var xml_parser = new XmlBoardParser(fact.data.body.board);
     var lines = [];
     while(xml_parser.hasMore()){
-        lines.push(parser.next());
+        lines.push(xml_parser.next());
     }
 
     // next feed lines into a json parser to generate words
     var json_parser = new JsonBoardParser(lines);
     while(json_parser.hasMore()){
-        publishNewWord(pub, fact.board, parser.next());
+        publishNewWord(pub, fact.board, json_parser.next());
     }
 
     _.each(_.keys(xml_parser.solved), function(element){
