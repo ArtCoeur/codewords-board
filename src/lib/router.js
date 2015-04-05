@@ -1,4 +1,5 @@
 var JsonBoardParser = require('./json_board_parser'),
+    XmlBoardParser = require('./xml_board_parser'),
     logger = require('./logger'),
     _ = require('underscore');
 
@@ -27,7 +28,7 @@ function handleNewJsonBoard(pub, fact) {
 
     // parse fact.data.body using fact.data.type
     // currently this assumes it's json
-    var parser = new BoardParser(fact.data.body.board);
+    var parser = new JsonBoardParser(fact.data.body.board);
 
     while(parser.hasMore()){
         var word = parser.next();
@@ -60,5 +61,5 @@ function handleNewJsonBoard(pub, fact) {
 }
 
 function handleNewXmlBoard(pub, fact) {
-
+    var parser = new XmlBoardParser(fact.data.body.board);
 }

@@ -1,42 +1,43 @@
-var JsonBoardParser = require('../src/lib/json_board_parser'),
-    assert = require('assert');
+var XmlBoardParser = require('../src/lib/xml_board_parser'),
+    assert = require('assert'),
+    fixtures = require("./fixtures");
 
-describe('JsonBoardParser', function() {
+
+describe('XmlBoardParser', function() {
     describe('next', function() {
         it('should return the next word', function() {
             // get fixtures from a file or something
-            var data = [['1','16','6','4','22','x','5','13','4','6','14','14','17','6','2']];
-            var parser = new JsonBoardParser(data);
+            var parser = new XmlBoardParser(fixtures.xml.one);
 
             var word = parser.next();
 
-            assert(word.cells.length == 5);
+            assert(word.cells.length == 8);
             assert(word.location.x == 0);
-            assert(word.location.y == 0);
+            assert(word.location.y == 1);
             assert(word.orientation == 'h');
 
-            assert('1' == word.cells[0]);
-            assert('16' == word.cells[1]);
-            assert('6' == word.cells[2]);
-            assert('4' == word.cells[3]);
-            assert('22' == word.cells[4]);
+            assert('6' == word.cells[0]);
+            assert('1' == word.cells[1]);
+            assert('26' == word.cells[2]);
+            assert('9' == word.cells[3]);
+            assert('1' == word.cells[4]);
+            assert('24' == word.cells[5]);
+            assert('19' == word.cells[6]);
+            assert('1' == word.cells[7]);
 
             word = parser.next();
 
-            assert(word.cells.length == 9);
-            assert(word.location.x == 6);
-            assert(word.location.y == 0);
+            assert(word.cells.length == 6);
+            assert(word.location.x == 9);
+            assert(word.location.y == 1);
             assert(word.orientation == 'h');
 
-            assert('5' == word.cells[0]);
-            assert('13' == word.cells[1]);
-            assert('4' == word.cells[2]);
-            assert('6' == word.cells[3]);
-            assert('14' == word.cells[4]);
-            assert('14' == word.cells[5]);
-            assert('17' == word.cells[6]);
-            assert('6' == word.cells[7]);
-            assert('2' == word.cells[8]);
+            assert('12' == word.cells[0]);
+            assert('24' == word.cells[1]);
+            assert('17' == word.cells[2]);
+            assert('18' == word.cells[3]);
+            assert('12' == word.cells[4]);
+            assert('11' == word.cells[5]);
         });
 
         it('should only return words with more than 2 characters', function() {
@@ -47,7 +48,7 @@ describe('JsonBoardParser', function() {
                 ['14','x','15','x','x','11','x','x','5','x','16','x','25','x','21'],
                 ['x','x','15','x','x','14','x','x','5','x','16','x','25','x','21']
             ];
-            var parser = new JsonBoardParser(data);
+            var parser = new XmlBoardParser(data);
             // three words on top line
             parser.next();
             parser.next();
@@ -82,7 +83,7 @@ describe('JsonBoardParser', function() {
         it('should allow iteration', function(){
             // get fixtures from a file or something
             var data = [['1','16','6','4','22','x','5','13','4','6','14','14','17','6','2']];
-            var parser = new JsonBoardParser(data);
+            var parser = new XmlBoardParser(data);
 
             var word = parser.next();
             assert(word != null);
