@@ -1,12 +1,12 @@
-var BoardParser = require('../src/lib/board_parser'),
+var JsonBoardParser = require('../src/lib/json_board_parser'),
     assert = require('assert');
 
-describe('BoardParser', function() {
+describe('JsonBoardParser', function() {
     describe('next', function() {
         it('should return the next word', function() {
             // get fixtures from a file or something
             var data = [['1','16','6','4','22','x','5','13','4','6','14','14','17','6','2']];
-            var parser = new BoardParser(data);
+            var parser = new JsonBoardParser(data);
 
             var word = parser.next();
 
@@ -47,7 +47,7 @@ describe('BoardParser', function() {
                 ['14','x','15','x','x','11','x','x','5','x','16','x','25','x','21'],
                 ['x','x','15','x','x','14','x','x','5','x','16','x','25','x','21']
             ];
-            var parser = new BoardParser(data);
+            var parser = new JsonBoardParser(data);
             // three words on top line
             parser.next();
             parser.next();
@@ -82,7 +82,7 @@ describe('BoardParser', function() {
         it('should allow iteration', function(){
             // get fixtures from a file or something
             var data = [['1','16','6','4','22','x','5','13','4','6','14','14','17','6','2']];
-            var parser = new BoardParser(data);
+            var parser = new JsonBoardParser(data);
 
             var word = parser.next();
             assert(word != null);

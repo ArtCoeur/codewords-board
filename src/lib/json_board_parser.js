@@ -13,7 +13,7 @@ var min_length = 3,
  * }
  */
 
-function BoardParser(data){
+function JsonBoardParser(data){
 
     this.words = [];
     this.index = 0;
@@ -62,7 +62,7 @@ function BoardParser(data){
     }
 }
 
-BoardParser.prototype.addWord = function(cells, x, y, orientation){
+JsonBoardParser.prototype.addWord = function(cells, x, y, orientation){
 
     if (cells.length < min_length){
         return;
@@ -80,14 +80,14 @@ BoardParser.prototype.addWord = function(cells, x, y, orientation){
 /**
  * Return the next word object
  */
-BoardParser.prototype.next = function() {
+JsonBoardParser.prototype.next = function() {
     if (this.index < this.words.length){
         return this.words[this.index++];
     }
 };
 
-BoardParser.prototype.hasMore = function() {
+JsonBoardParser.prototype.hasMore = function() {
     return this.index < this.words.length;
 }
 
-module.exports = BoardParser;
+module.exports = JsonBoardParser;

@@ -1,23 +1,29 @@
-var BoardParser = require('./board_parser'),
+var JsonBoardParser = require('./json_board_parser'),
     logger = require('./logger'),
     _ = require('underscore');
 
 /**
+ * Extract words from board data & cells
+ * Publish facts on the board
+ *
  * @param pub socket to write facts back to
- * @param fact fact object
+ * @param fact A fact object
  */
 exports.handleFact= function(pub, fact) {
     if (fact.name == 'board.new'){
-        // extract words from board data & cells
-        handleNewBoard(pub, fact);
+        if (fact.data.type == 'application/vnd.artcoeur.com-v1+json') {
+            handleNewJsonBoard(pub, fact);
+        } else if (fact.data.type == 'application/vnd.bestforpuzzles.com-v1+xml'){
+            handleNewXmlBoard(pub, fact);
+        }
     }
 };
 
 /**
 * @param pub socket to write facts back to
-* @param fact fact object
+* @param fact A fact object
 */
-function handleNewBoard(pub, fact) {
+function handleNewJsonBoard(pub, fact) {
 
     // parse fact.data.body using fact.data.type
     // currently this assumes it's json
@@ -51,4 +57,8 @@ function handleNewBoard(pub, fact) {
         };
         pub.write(JSON.stringify(cell_fact));
     });
+}
+
+function handleNewXmlBoard(pub, fact) {
+
 }
