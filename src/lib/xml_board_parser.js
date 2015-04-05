@@ -23,10 +23,13 @@ function XmlBoardParser(input_doc){
         }
     }).parseFromString(input_doc);
 
-    var that = this;
-    _.each(document.getElementsByTagName('cell'), function(node) {
-        that.addCell(node);
-    });
+
+    if (document) {
+        var that = this;
+        _.each(document.getElementsByTagName('cell'), function (node) {
+            that.addCell(node);
+        });
+    }
 
     // next create the words data from the cells
     //console.log(this.cells);

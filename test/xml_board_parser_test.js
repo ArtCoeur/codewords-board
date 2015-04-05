@@ -45,6 +45,13 @@ describe('XmlBoardParser', function() {
             //assert('11' == word.cells[5]);
         });
 
+        it ("should handle invalid xml", function(){
+            var parser = new XmlBoardParser('');
+            assert(!parser.hasMore());
+            var line = parser.next();
+            assert(null == line);
+        });
+
         //it('should only return words with more than 2 characters', function() {
         //    var data = [
         //        ['1','16','6', '4','22','x','5','13','4','6','14','x','17','6','2'],
