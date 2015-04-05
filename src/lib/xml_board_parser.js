@@ -1,44 +1,84 @@
-var _ = require('underscore');
+var _ = require('underscore'),
+    xpath = require('xpath'),
+    DOMParser = require('xmldom').DOMParser;
 
 var min_length = 3;
 
 /**
- * from an xml document
+ * Parse board data from an xml document
  */
+function XmlBoardParser(input_doc){
 
-function XmlBoardParser(data){
+    //this.words = [];
+    this.cells = [];
 
-    this.words = [];
     this.index = 0;
-    // parse data here
+    this.solved = {};
+
+    var document = new DOMParser({
+        locator: {},
+        errorHandler: {
+            error: function(){},
+            fatalError: function(){}
+        }
+    }).parseFromString(input_doc);
+
+    var that = this;
+    _.each(document.getElementsByTagName('cell'), function(node) {
+        that.addCell(node);
+    });
+
+    // next create the words data from the cells
+    //console.log(this.cells);
+    //console.log(this.solved);
+
 }
 
-XmlBoardParser.prototype.addWord = function(cells, x, y, orientation){
+XmlBoardParser.prototype.addCell = function(node) {
 
-    if (cells.length < min_length){
-        return;
+    var x = node.getAttribute('x') - 1;
+    var y = node.getAttribute('y') - 1;
+
+    // fill out array here
+    if (!_.isArray(this.cells[y])){
+        this.cells[y] = [];
+    }
+    if (!_.isArray(this.cells[y][x])){
+        this.cells[y][x] = [];
     }
 
-    this.words.push(
-        {
-            cells: cells,
-            location: {x: x, y: y},
-            orientation: orientation
-        }
-    );
+    this.cells[y][x] = node.getAttribute('number') ? node.getAttribute('number') : 'x';
+    if ('true' == node.getAttribute('hint')){
+        this.solved[node.getAttribute('number')] = node.getAttribute('solution');
+    }
 };
+
+//XmlBoardParser.prototype.addWord = function(cells, x, y, orientation){
+//
+//    if (cells.length < min_length){
+//        return;
+//    }
+//
+//    this.words.push(
+//        {
+//            cells: cells,
+//            location: {x: x, y: y},
+//            orientation: orientation
+//        }
+//    );
+//};
 
 /**
  * Return the next word object
  */
 XmlBoardParser.prototype.next = function() {
-    if (this.index < this.words.length){
-        return this.words[this.index++];
+    if (this.index < this.cells.length){
+        return this.cells[this.index++];
     }
 };
 
 XmlBoardParser.prototype.hasMore = function() {
-    return this.index < this.words.length;
+    return this.index < this.cells.length;
 }
 
 module.exports = XmlBoardParser;
