@@ -9,7 +9,10 @@ describe('router', function() {
                 name: 'board.new',
                 board: 'abc',
                 data : {
-                    body: ['1,16,6,4,22,x,5,13,4,6,14,14,17,6,2'],
+                    body: {
+                        board: ['1,16,6,4,22,x,5,13,4,6,14,14,17,6,2'],
+                        solved: {}
+                    },
                     type: 'text/csv'
                 }
             };
