@@ -76,8 +76,11 @@ function publishCellUpdated(pub, board, number, letter) {
         board: board,
         name: 'cell.updated',
         data: {
-            number: number,
-            letter: letter
-            }
-        }),'utf8');
+            body: {
+                number: number,
+                letter: letter
+            },
+            type: 'application/json'
+        }
+    }),'utf8');
 }
