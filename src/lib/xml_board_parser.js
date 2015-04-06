@@ -56,21 +56,6 @@ XmlBoardParser.prototype.addCell = function(node) {
     }
 };
 
-//XmlBoardParser.prototype.addWord = function(cells, x, y, orientation){
-//
-//    if (cells.length < min_length){
-//        return;
-//    }
-//
-//    this.words.push(
-//        {
-//            cells: cells,
-//            location: {x: x, y: y},
-//            orientation: orientation
-//        }
-//    );
-//};
-
 /**
  * Return the next word object
  */

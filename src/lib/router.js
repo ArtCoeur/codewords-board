@@ -42,7 +42,7 @@ function handleNewJsonBoard(pub, fact) {
 }
 
 function handleNewXmlBoard(pub, fact) {
-    var xml_parser = new XmlBoardParser(fact.data.body.board);
+    var xml_parser = new XmlBoardParser(fact.data.body);
     var lines = [];
     while(xml_parser.hasMore()){
         lines.push(xml_parser.next());
@@ -79,6 +79,5 @@ function publishCellUpdated(pub, board, number, letter) {
             number: number,
             letter: letter
             }
-        })
-    );
+        }),'utf8');
 }
