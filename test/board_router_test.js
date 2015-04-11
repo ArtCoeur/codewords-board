@@ -56,8 +56,8 @@ describe('router', function() {
                     assert(fact.board == 'abc');
                     // they will all be word.new facts as there is not solved cells in the data
                     assert(fact.name == 'cell.updated');
-                    assert(fact.data.number == '12');
-                    assert(fact.data.letter == 'a');
+                    assert(fact.data.body.number == '12');
+                    assert(fact.data.body.letter == 'a');
                 }
             };
 
