@@ -8,7 +8,7 @@ RUN apt-get update -qq && \
     nodejs \
     npm
 
-CMD ["nodejs", "/home/app/index.js"]
+CMD ["/home/app/run.sh"]
 
 # Move files into place
 COPY src/ /home/app/

@@ -17,7 +17,8 @@
     "rabbit.js": "~0.4.2",
     "uniqid": "~1.0.0",
     "xpath": "0.0.9",
-    "xmldom": "~0.1.19"
+    "xmldom": "~0.1.19",
+    "forever": "~0.14.1"
   },
   "devDependencies": {
     "should": "~4.3.0",

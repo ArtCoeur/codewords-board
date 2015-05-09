@@ -4,44 +4,28 @@ var logger = require('./lib/logger'),
 
 logger.info('board: running');
 
-// wait until rabbitmq can accept connections, somehow
-function doConnect(){
+var context = rabbitmq.createContext(
+    'amqp://' + process.env.RABBITMQ_PORT_5672_TCP_ADDR + ':' + process.env.RABBITMQ_PORT_5672_TCP_PORT
+);
 
-    try {
-        var context = rabbitmq.createContext(
-            'amqp://' + process.env.RABBITMQ_PORT_5672_TCP_ADDR + ':' + process.env.RABBITMQ_PORT_5672_TCP_PORT
-        );
+context.on('ready', function () {
 
-        context.on('ready', function() {
+    logger.info('board: connected');
 
-            logger.info('board: connected');
+    // subscribe to pub and sub queues
+    var sub = context.socket('SUB'),
+        pub = context.socket('PUB');
 
-            // subscribe to pub and sub queues
-            var sub = context.socket('SUB'),
-                pub = context.socket('PUB');
+    pub.connect('events', function () {
 
-            pub.connect('events', function() {
+        sub.connect('events', function () {
 
-                sub.connect('events', function () {
-
-                    // deal with facts as they come in
-                    sub.on('data', function (body) {
-                        logger.info("new fact : " + body);
-                        router.newFact(pub, JSON.parse(body));
-                    });
-                });
+            // deal with facts as they come in
+            sub.on('data', function (body) {
+                logger.info("new fact : " + body);
+                router.newFact(pub, JSON.parse(body));
             });
         });
+    });
+});
 
-        return true;
-
-    } catch (err){
-        logger.error(err);
-
-        setTimeout(doConnect, 3000);
-        return false;
-    }
-}
-
-// hack to wait till rabbitmq is up
-setTimeout(doConnect, 10000);
