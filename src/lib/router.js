@@ -10,12 +10,14 @@ var JsonBoardParser = require('./json_board_parser'),
  * @param pub socket to write facts back to
  * @param fact A fact object
  */
-exports.handleFact= function(pub, fact) {
+exports.newFact= function(pub, fact) {
     if (fact.name == 'board.new'){
         if (fact.data.type == 'application/vnd.artcoeur.com-v1+json') {
             handleNewJsonBoard(pub, fact);
         } else if (fact.data.type == 'application/vnd.bestforpuzzles.com-v1+xml'){
             handleNewXmlBoard(pub, fact);
+        } else {
+            logger.info("Unknown fact.data.type: " + fact.data.type);
         }
     }
 };

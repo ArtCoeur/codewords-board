@@ -3,7 +3,7 @@ var router = require('../src/lib/router'),
     fixtures = require("./fixtures");
 
 describe('router', function() {
-    describe('handleFact', function() {
+    describe('newFact', function() {
         it('should handle board.new json facts', function() {
 
             // get fixtures from a file or something
@@ -30,7 +30,7 @@ describe('router', function() {
                 }
             };
 
-            router.handleFact(pub, fact);
+            router.newFact(pub, fact);
         });
 
         it('should publish cell.updated facts', function() {
@@ -61,7 +61,7 @@ describe('router', function() {
                 }
             };
 
-            router.handleFact(pub, fact);
+            router.newFact(pub, fact);
         });
 
         it ('should handle board.new xml facts', function() {
@@ -84,7 +84,7 @@ describe('router', function() {
                 }
             };
 
-            router.handleFact(pub, fact);
+            router.newFact(pub, fact);
         });
     });
 });

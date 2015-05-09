@@ -27,7 +27,7 @@ function doConnect(){
                     // deal with facts as they come in
                     sub.on('data', function (body) {
                         logger.info("new fact : " + body);
-                        router.handleFact(pub, JSON.parse(body));
+                        router.newFact(pub, JSON.parse(body));
                     });
                 });
             });
