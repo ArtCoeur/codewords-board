@@ -10,27 +10,44 @@ var JsonBoardParser = require('./json_board_parser'),
  * @param pub socket to write facts back to
  * @param fact A fact object
  */
-exports.newFact= function(pub, fact) {
+exports.newFact= (pub, fact) => {
+    var parser;
+
     if (fact.name == 'board.new'){
         if (fact.data.type == 'application/vnd.artcoeur.com-v1+json') {
-            handleNewJsonBoard(pub, fact);
+            parser = parseJsonFact(fact);
+            handleNewBoard(pub, fact, parser);
         } else if (fact.data.type == 'application/vnd.bestforpuzzles.com-v1+xml'){
-            handleNewXmlBoard(pub, fact);
+            parser = parseXMLFact(fact);
+            handleNewBoard(pub, fact, parser);
         } else {
             logger.info("Unknown fact.data.type: " + fact.data.type);
         }
     }
 };
 
-/**
-* @param pub socket to write facts back to
-* @param fact A fact object
-*/
-function handleNewJsonBoard(pub, fact) {
+parseJsonFact = (fact) => {
+    return new JsonBoardParser(fact.data.body.board);
+};
 
-    // parse fact.data.body using fact.data.type
-    // currently this assumes it's json
-    var parser = new JsonBoardParser(fact.data.body.board);
+parseXMLFact = (fact) => {
+    var xml_parser = new XmlBoardParser(fact.data.body);
+    var lines = [];
+    while(xml_parser.hasMore()){
+        lines.push(xml_parser.next());
+    }
+
+    // next feed lines into a json parser to generate words
+    return new JsonBoardParser(lines);
+};
+
+/**
+ *
+ * @param pub
+ * @param fact
+ * @param parser
+ */
+handleNewBoard = (pub, fact, parser) => {
 
     while(parser.hasMore()){
         publishNewWord(pub, fact.board, parser.next());
@@ -41,28 +58,9 @@ function handleNewJsonBoard(pub, fact) {
     _.each(_.keys(fact.data.body.solved), function(element){
         publishCellUpdated(pub, fact.board, element, fact.data.body.solved[element]);
     });
-}
+};
 
-function handleNewXmlBoard(pub, fact) {
-    var xml_parser = new XmlBoardParser(fact.data.body);
-    var lines = [];
-    while(xml_parser.hasMore()){
-        lines.push(xml_parser.next());
-    }
-
-    // next feed lines into a json parser to generate words
-    var json_parser = new JsonBoardParser(lines);
-    while(json_parser.hasMore()){
-        publishNewWord(pub, fact.board, json_parser.next());
-    }
-
-    _.each(_.keys(xml_parser.solved), function(element){
-        publishCellUpdated(pub, fact.board, element, xml_parser.solved[element]);
-    });
-}
-
-
-function publishNewWord(pub, board, word) {
+publishNewWord = (pub, board, word) => {
     pub.write(JSON.stringify({
         board: board,
         name: 'word.new',
@@ -71,9 +69,9 @@ function publishNewWord(pub, board, word) {
             type: 'application/json'
         }
     }), 'utf8');
-}
+};
 
-function publishCellUpdated(pub, board, number, letter) {
+publishCellUpdated = (pub, board, number, letter) => {
     pub.write(JSON.stringify({
         board: board,
         name: 'cell.updated',
@@ -85,4 +83,4 @@ function publishCellUpdated(pub, board, number, letter) {
             type: 'application/json'
         }
     }),'utf8');
-}
+};

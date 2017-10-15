@@ -67,6 +67,6 @@ XmlBoardParser.prototype.next = function() {
 
 XmlBoardParser.prototype.hasMore = function() {
     return this.index < this.cells.length;
-}
+};
 
 module.exports = XmlBoardParser;

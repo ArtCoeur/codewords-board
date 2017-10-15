@@ -92,6 +92,6 @@ JsonBoardParser.prototype.next = function() {
 
 JsonBoardParser.prototype.hasMore = function() {
     return this.index < this.words.length;
-}
+};
 
 module.exports = JsonBoardParser;
