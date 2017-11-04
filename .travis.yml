@@ -3,7 +3,7 @@ node_js:
   - "6"
 
 install:
-    - cd src; yarn install --modules-folder=src/node_modules
+    - yarn install --modules-folder=src/node_modules
 
 script:
     - yarn test
@@ -11,3 +11,4 @@ script:
 branches:
     only:
         - master
+        - /^greenkeeper/.*$/
