@@ -1,4 +1,4 @@
-var router = require('../src/lib/router'),
+var router = require('../lib/router'),
     assert = require('assert'),
     fixtures = require("./fixtures");
 

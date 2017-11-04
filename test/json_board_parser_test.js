@@ -1,4 +1,4 @@
-var JsonBoardParser = require('../src/lib/json_board_parser'),
+var JsonBoardParser = require('../lib/json_board_parser'),
     assert = require('assert'),
     fixtures = require("./fixtures");
 

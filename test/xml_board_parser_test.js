@@ -1,4 +1,4 @@
-var XmlBoardParser = require('../src/lib/xml_board_parser'),
+var XmlBoardParser = require('../lib/xml_board_parser'),
     assert = require('assert'),
     fixtures = require("./fixtures");
 

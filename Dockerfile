@@ -11,8 +11,10 @@ RUN apt-get update -qq && \
 CMD ["/home/app/run.sh"]
 
 # Move files into place
-COPY src/ /home/app/
-COPY npm-shrinkwrap.json /home/app/
+COPY lib/ /home/app/
+COPY index.js /home/app/
+
+# COPY npm-shrinkwrap.json /home/app/
 COPY package.json /home/app/
 COPY yarn.lock /home/app/
 

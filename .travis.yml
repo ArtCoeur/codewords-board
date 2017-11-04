@@ -3,7 +3,7 @@ node_js:
   - "6"
 
 install:
-    - yarn install --modules-folder=src/node_modules
+    - yarn install
 
 script:
     - yarn test
