@@ -8,7 +8,7 @@
     "url": "git@github.com:ArtCoeur/codewords-board.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test"
+    "test": "./src/node_modules/mocha/bin/mocha test"
   },
   "author": "Tim Rodger tim.rodger@gmail.com",
   "dependencies": {
