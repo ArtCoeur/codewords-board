@@ -3,10 +3,10 @@ node_js:
   - "6"
 
 install:
-    - cd src; npm install
+    - cd src; yarn install --modules-folder=src/node_modules
 
 script:
-    - npm test
+    - yarn test
 
 branches:
     only:

@@ -1,14 +1,14 @@
 {
   "name": "codewords-board",
   "version": "0.1.0",
-  "description": "Handles parsing raw board data into words and cells",
+  "description": "Parses raw board data into words and cells",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:ArtCoeur/codewords-board.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ../test"
+    "test": "./node_modules/mocha/bin/mocha test"
   },
   "author": "Tim Rodger tim.rodger@gmail.com",
   "dependencies": {
