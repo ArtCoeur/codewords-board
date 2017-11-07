@@ -22,7 +22,7 @@ context.on('ready', function () {
 
             // deal with facts as they come in
             sub.on('data', function (body) {
-                logger.info("new fact : " + body);
+                logger.info('new fact : ' + body);
                 router.newFact(pub, JSON.parse(body));
             });
         });
