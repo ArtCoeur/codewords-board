@@ -13,7 +13,7 @@
   "author": "Tim Rodger tim.rodger@gmail.com",
   "dependencies": {
     "underscore": "^1.7.0",
-    "winston": "~2.4.0",
+    "winston": "~3.0.0-rc6",
     "rabbit.js": "~0.4.2",
     "uniqid": "^4.1.1",
     "xpath": "0.0.27",
